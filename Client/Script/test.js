@@ -38,22 +38,45 @@ function QuizViewModel(data) {
     self.currentTicketIdNormalized = ko.computed(function(){return self.currentTicketId() + 1;});
     self.currentTicket = ko.computed(function(){return self.tickets()[self.currentTicketId()];});
 
-    self.next = function() {self.currentTicketId(self.currentTicketId()++);}
-    self.prev = function() {self.currentTicketId(self.currentTicketId()--);}
-
+    // Previos, Next buttons
+    self.onNextButtonClick = function(){
+      var newId = self.currentTicketId() + 1;
+      if (newId <= self.tickets().length - 1){
+        self.currentTicketId(newId);
+        if (newId === 1){
+          self.prevButtonEnable(true);
+        };
+      } else {
+        self.nextButtonEnable(false);
+      }
+    };
+    self.onPrevButtonClick = function(){
+      var newId = self.currentTicketId() - 1;
+      if (newId >= 0){
+        self.currentTicketId(newId);
+        if (newId === self.tickets().length-2){
+          self.nextButtonEnable(true);
+        }
+      } else{
+        self.prevButtonEnable(false);
+      }
+    };
+    self.prevButtonEnable = ko.observable(false);
+    self.nextButtonEnable = ko.observable(true);
+    
     // Timer
     self.remainingMin = ko.observable(self.settings.timeLimit.min);
     self.remainingMinFormatted = ko.computed(
       function(){
         return (self.remainingMin() < 10) ? "0" + self.remainingMin() : self.remainingMin();
       }
-    )
+    );
     self.remainingSec = ko.observable(self.settings.timeLimit.sec);
     self.remainingSecFormatted = ko.computed(
       function(){
         return (self.remainingSec() < 10) ? "0" + self.remainingSec() : self.remainingSec();
       }
-    )   
+    );
     self.isTimerRunning = ko.observable(false);
     
     self.StartTimer = function(){
@@ -73,12 +96,15 @@ function QuizViewModel(data) {
         }
         else self.remainingSec(--sec);
       }, 1000)
+    };
+    
+    self.onTimeOver = function(){alert("That's all!");};
+    self.Init = function(){
+       //Start timer
+       self.StartTimer();
     }
-    
-    self.onTimeOver = function(){alert("That's all!");}
-    
-    //Start timer
-    self.StartTimer();
+
+    self.Init();
     
     return self;
 };
