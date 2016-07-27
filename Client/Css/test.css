@@ -45,6 +45,9 @@ footer
     padding-top:15px;
     font-weight:600;
 }
+.question-number .glyphicon{
+  color:red;
+}
 .test-controls
 {
     background-color:white;

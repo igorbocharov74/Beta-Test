@@ -27,6 +27,7 @@
             <div class="question-number">
               <span>Вопрос №&nbsp;</span>
               <span data-bind="text : currentTicketIdNormalized"></span>
+              <span class="glyphicon glyphicon-question-sign" data-bind="visible: questionSignVisible"></span>
             </div>
             <div class="clock">
               <p id="timer">
@@ -37,7 +38,7 @@
             </div>
             <div class="row">
               <div class="col-xs-6">
-                <button type="button" class="btn btn-default btn-lg flag">
+                <button type="button" class="btn btn-default btn-lg flag" data-bind="click: onQuestionSignButtonClick">
                   <span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                 </button>
               </div>
@@ -47,49 +48,35 @@
             </div>
         </div>
         
-        <div class="col-xs-9 question-block" data-bind="with: currentTicket">
-          <p class="question" data-bind="text : question"></p>
-          <p class="answer" data-bind="foreach: answers">
-              <label>
-                <input type="radio" name="answersGroup" 
-                       data-bind="attr: {value: value}, checked: $root.selected" />
-                <span data-bind="text: text"></span>
-              </label>
-          </p>
+          <div class="col-xs-9 question-block" data-bind="with: currentTicket">
+            <p class="question" data-bind="text : question"></p>
+            <p class="answer" data-bind="foreach: answers">
+                <label>
+                  <input type="radio" name="answersGroup" 
+                         data-bind="attr: {value: id}, checked: $root.selected" />
+                  <span data-bind="text: text"></span>
+                </label>
+            </p>
+          </div>
+         </div>
+         <div class="row">
+           <div class="col-xs-12 text-center">
+             <button type="button" class="btn btn-success btn-lg" data-bind="click: onEndQuizButtonClick">Закінчити тестування</button>
+           </div>
         </div>
-       </div>
-      <div class="row">
-        <div class="col-xs-12 prev-next text-center">
-          <button type="button" class="btn btn-info btn-lg" data-bind="click: onPrevButtonClick, enable: prevButtonEnable">Попередній</button>
-          <button type="button" class="btn btn-info btn-lg" data-bind="click: onNextButtonClick, enable: nextButtonEnable">Наступний</button>
+        <div class="row">
+          <div class="col-xs-12 prev-next text-center">
+            <button type="button" class="btn btn-info btn-lg" data-bind="click: onPrevButtonClick, enable: prevButtonEnable">Попередній</button>
+            <button type="button" class="btn btn-info btn-lg" data-bind="click: onNextButtonClick, enable: nextButtonEnable">Наступний</button>
+          </div>
         </div>
-      </div>
-    
-      <div class="row pages">
-      <div class="col-xs-12">
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail"><span>1</span></button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail"><span class="marked">2</span></button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">3</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">4</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">5</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">6</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">7</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">8</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">9</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">10</button>
-         <div class="clearfix"></div>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">11</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">12</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">13</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">14</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">15</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">25</button>
-         <button type="button" class="btn btn-default btn-lg ticket-thumbnail">35</button>
-                           
+        
+        <!--Ticket thumbnails -->
+        <div class="row pages">
+          <div class="col-xs-12">
 
-         <div class="clearfix"></div>
-         </div>
-         </div>
+          </div>
+        </div>
       </div>
       </div><!--Content wrapper-->
     
@@ -100,5 +87,11 @@
       </footer>
       
     </div><!--container-->
+    
+    <!--Templates-->
+    <div id="templates" class="hidden">
+      <button type="button" class="btn btn-default btn-lg ticket-thumbnail"><span></span></button>
+      <div class="clearfix"></div>
+    <div>
   </body>
 </html>

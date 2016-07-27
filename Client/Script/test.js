@@ -1,20 +1,26 @@
+<!--Constants-->
+var TICKETS_IN_ROW = 3;
+
 $(document).ready(function(){
-  ko.applyBindings(new QuizViewModel(d));
+  var vm = new QuizViewModel(d);
+  ko.applyBindings(vm);
 });
 
 function AnswerViewModel(answer) {
   var self = this;
-  self.answer = answer;
+  self.text = answer.text;
   self.selected = ko.observable(false);
+  self.id = answer.id;
   return self;
 };
   
-function TicketViewModel(question, answers) {
+function TicketViewModel(ticket) {
   var self = this;
-  self.question = question;
+  self.question = ticket.question;
+  self.questionSigned = ko.observable(false);
   self.answers = [];
-  for (var i = 0; i < answers.length; i++) {
-      self.answers.push(new AnswerViewModel(answers[i]));
+  for (var i = 0; i < ticket.answers.length; i++) {
+      self.answers.push(new AnswerViewModel(ticket.answers[i]));
   }
   
   //TODO: fix logic
@@ -33,11 +39,16 @@ function QuizViewModel(data) {
     // Questions
     self.correctAnswers = data.quiz.correctAnswers;
     
-    self.tickets = ko.observableArray(data.quiz.tickets);
+    self.tickets = ko.observableArray([]);
     self.currentTicketId = ko.observable(0);
     self.currentTicketIdNormalized = ko.computed(function(){return self.currentTicketId() + 1;});
     self.currentTicket = ko.computed(function(){return self.tickets()[self.currentTicketId()];});
-
+    self.questionSignVisible = ko.observable(false);
+    
+    self.onQuestionSignButtonClick = function(){
+      self.questionSignVisible(!self.questionSignVisible());
+    }
+    
     // Previos, Next buttons
     self.onNextButtonClick = function(){
       var newId = self.currentTicketId() + 1;
@@ -63,6 +74,14 @@ function QuizViewModel(data) {
     };
     self.prevButtonEnable = ko.observable(false);
     self.nextButtonEnable = ko.observable(true);
+    
+    self.onTicketThumbClick = function(id){
+      self.currentTicketId(id);
+    }
+    
+    self.onEndQuizButtonClick = function(){
+      self.EndQuiz();
+    };
     
     // Timer
     self.remainingMin = ko.observable(self.settings.timeLimit.min);
@@ -98,8 +117,36 @@ function QuizViewModel(data) {
       }, 1000)
     };
     
-    self.onTimeOver = function(){alert("That's all!");};
+    self.onTimeOver = function(){
+      self.EndQuiz();
+    };
+    
+    self.EndQuiz = function(){
+      if (self.isTimerRunning()){
+        clearInterval(self.timerId);
+      }
+
+      alert("That's all!");
+    };
+    
+    // Init
     self.Init = function(){
+      var $templates = $("#templates").children();
+      var $parent = $(".row.pages").children().first();
+      var $clonedNode;
+      
+      for (var i = 0; i < data.quiz.tickets.length; i++) {
+        self.tickets.push(new TicketViewModel(data.quiz.tickets[i]));
+        
+        if (i % TICKETS_IN_ROW === 0 && i > 0){
+          $clonedNode = $($templates[1]).clone();
+          $clonedNode.appendTo($parent);
+        }
+        $clonedNode = $($templates[0]).clone();
+        $($clonedNode).attr("data-bind", "click: function(){onTicketThumbClick(" + i + ");}");
+        $($clonedNode).find("span").text(i+1);
+        $clonedNode.appendTo($parent);
+      }
        //Start timer
        self.StartTimer();
     }
