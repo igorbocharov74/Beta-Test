@@ -1,16 +1,20 @@
 <!--Constants-->
 var TICKETS_IN_ROW = 3;
 
+<!--Document Events-->
 $(document).ready(function(){
   var vm = new QuizViewModel(d);
   ko.applyBindings(vm);
 });
 
+<!--Models-->
 function AnswerViewModel(answer) {
   var self = this;
   self.text = answer.text;
   self.selected = ko.observable(false);
   self.id = answer.id;
+  self.canBeHidden = "canBeHidden" in answer ? answer.canBeHidden : false;
+  self.aVisible = ko.observable(true);
   return self;
 };
   
@@ -18,6 +22,8 @@ function TicketViewModel(ticket) {
   var self = this;
   self.question = ticket.question;
   self.questionSigned = ko.observable(false);
+  self.applied50 = ko.observable(false);
+  self.allow50 = ko.observable(ticket.allow50);
   self.answers = [];
   for (var i = 0; i < ticket.answers.length; i++) {
       self.answers.push(new AnswerViewModel(ticket.answers[i]));
@@ -34,19 +40,45 @@ function TicketViewModel(ticket) {
 function QuizViewModel(data) {
     var self = this;
     
+    self.InitTickets = function(){
+      for (var i = 0; i < data.quiz.tickets.length; i++) {
+        self.tickets.push(new TicketViewModel(data.quiz.tickets[i]));
+      }
+    };
+    
+    //Settings
     self.settings = data.quiz.settings;
     
     // Questions
     self.correctAnswers = data.quiz.correctAnswers;
     
     self.tickets = ko.observableArray([]);
+    self.InitTickets();
+
     self.currentTicketId = ko.observable(0);
     self.currentTicketIdNormalized = ko.computed(function(){return self.currentTicketId() + 1;});
     self.currentTicket = ko.computed(function(){return self.tickets()[self.currentTicketId()];});
-    self.questionSignVisible = ko.observable(false);
+    
+    self.questionSignVisible = ko.computed(function(){return self.currentTicket().questionSigned();});
+    self.button50Visible = ko.computed(function(){return self.currentTicket().allow50();});
+    self.sign50Visible = ko.computed(function(){return self.currentTicket().applied50();});;
     
     self.onQuestionSignButtonClick = function(){
-      self.questionSignVisible(!self.questionSignVisible());
+      self.currentTicket().questionSigned(!self.questionSignVisible())
+    }
+    
+    self.onButton50Click = function(){
+      var newApplied50 = !self.currentTicket().applied50();
+      self.currentTicket().applied50(newApplied50);
+      
+      self.currentTicket().answers.forEach(function(a) {
+        a.selected(false);
+        if (a.canBeHidden && newApplied50){
+          a.aVisible(false);
+        } else {
+          a.aVisible(true);
+        }
+      });
     }
     
     // Previos, Next buttons
@@ -130,21 +162,22 @@ function QuizViewModel(data) {
     };
     
     // Init
+    
     self.Init = function(){
       var $templates = $("#templates").children();
       var $parent = $(".row.pages").children().first();
       var $clonedNode;
       
-      for (var i = 0; i < data.quiz.tickets.length; i++) {
-        self.tickets.push(new TicketViewModel(data.quiz.tickets[i]));
-        
+      for (var i = 0; i < self.tickets().length; i++) {
         if (i % TICKETS_IN_ROW === 0 && i > 0){
           $clonedNode = $($templates[1]).clone();
           $clonedNode.appendTo($parent);
         }
         $clonedNode = $($templates[0]).clone();
         $($clonedNode).attr("data-bind", "click: function(){onTicketThumbClick(" + i + ");}");
-        $($clonedNode).find("span").text(i+1);
+        $span = $($clonedNode).find("span");
+        $span.attr("data-bind", "css: { marked: tickets()[" + i + "].questionSigned()}")
+        $span.text(i+1);
         $clonedNode.appendTo($parent);
       }
        //Start timer

@@ -85,7 +85,7 @@ footer
   width:24px;
 }
 .ticket-thumbnail > span.marked{
-  color:red;
+  color:red!important;
 }
 .pages{
     margin-left:auto;

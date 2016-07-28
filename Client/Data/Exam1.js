@@ -41,7 +41,7 @@ var d =
         id : 1,
         question : "Question1",
         isSingleAnswer : true,
-        allow50 : true,
+        allow50 : false,
         answers : 
         [
           {
@@ -71,23 +71,28 @@ var d =
         [
           {
             text : "Answer2-1",
-            value : 1
+            value : 1,
+            canBeHidden : false
           },
           {
             text : "Answer2-2",
-            value : 2
+            value : 2,
+            canBeHidden : true
           },
           {
             text : "Answer2-3",
-            value : 3
+            value : 3,
+            canBeHidden : false
           },
           {
             text : "Answer2-4",
-            value : 4
+            value : 4,
+            canBeHidden : true
           },
           {
             text : "Answer2-5",
-            value : 5
+            value : 5,
+            canBeHidden : false
           }
          ]
     },
@@ -95,7 +100,7 @@ var d =
         id : 3,
         question : "Question3",
         isSingleAnswer : true,
-        allow50 : true,
+        allow50 : false,
         answers : 
         [
           {
@@ -124,7 +129,7 @@ var d =
         id : 4,
         question : "Question4",
         isSingleAnswer : true,
-        allow50 : true,
+        allow50 : false,
         answers : 
         [
           {
@@ -149,7 +154,7 @@ var d =
         id : 5,
         question : "Question5",
         isSingleAnswer : true,
-        allow50 : true,
+        allow50 : false,
         answers : 
         [
           {
