@@ -72,12 +72,12 @@ var d =
           {
             text : "Answer2-1",
             value : 1,
-            canBeHidden : false
+            canBeHidden : true
           },
           {
             text : "Answer2-2",
             value : 2,
-            canBeHidden : true
+            canBeHidden : false
           },
           {
             text : "Answer2-3",
