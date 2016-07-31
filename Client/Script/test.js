@@ -1,5 +1,5 @@
 <!--Constants-->
-var TICKETS_IN_ROW = 3;
+var TICKETS_IN_ROW = 10;
 
 <!--Document Events-->
 $(document).ready(function(){
