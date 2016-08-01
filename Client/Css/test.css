@@ -22,7 +22,7 @@ header
 
 footer
 {
-	padding-top:10px;
+    padding-top:10px;
     margin-bottom:10px;
     margin-top:5px;
     height:80px;
@@ -100,7 +100,7 @@ footer
   }
  .flag
  {
-	margin-left:35px;
+    margin-left:35px;
     margin-top:20px;
     color:red;
  }
@@ -120,29 +120,38 @@ footer
   font-size: 200%;
   font-weight: bold;
  }
- 
  .fifty-fifty
  {
     margin-top:20px;
- }
- .marg-l{
-	margin-right:15px;
- }
- .marg-r{
-	margin-left:15px;
  }
  .prev-next
  {
     margin:5px auto;
     min-height:70px;
  }
-
+ 
+/* Offsets */
  .left-pad-5{
-	 padding-left:5px!important;
+  padding-left:5px!important;
  }
   .left-pad-10{
-	 padding-left:10px!important;
+  padding-left:10px!important;
  }
- .text-center{
-	margin-top:10px;
+ 
+  .left-margin-15{
+  margin-right:15px;
+ }
+ 
+ .right-margin-15{
+  margin-left:15px;
+ }
+ 
+ .top-margin-10{
+  margin-top:10px;
+ }
+  .top-margin-40{
+  margin-top:40px;
+ }
+  .top-margin-70{
+  margin-top:70px;
  }
