@@ -40,7 +40,7 @@ footer
 .question-number{
     margin-top:10px;
     font-family:arial;
-    font-size:135%;
+    font-size:130%;
     padding-top:15px;
     font-weight:600;
 }
@@ -125,9 +125,15 @@ footer
  {
     margin-top:20px;
  }
+ .marg-l{
+	margin-right:15px;
+ }
+ .marg-r{
+	margin-left:15px;
+ }
  .prev-next
  {
-    margin:20px auto;
+    margin:5px auto;
     min-height:70px;
  }
 
@@ -138,5 +144,5 @@ footer
 	 padding-left:10px!important;
  }
  .text-center{
-	margin-top:5px;
+	margin-top:10px;
  }
