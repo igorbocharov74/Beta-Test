@@ -1,7 +1,7 @@
 $(document).ready(function(){
   // Create options  
   var listitems = '';
-  $.each(d.quiz, function(key, value){
+  $.each(d.quiz, function(index, value){
       listitems += '<option value=' + value.id + '>' + value.title + '</option>';
   });
   $('#QuizSelector').html(listitems);

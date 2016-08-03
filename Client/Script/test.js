@@ -1,42 +1,42 @@
-<!--Constants-->
+// Constants
 var TICKETS_IN_ROW = 10;
 
-<!--Document Events-->
+// Document Events
 $(document).ready(function(){
   var vm = new QuizViewModel(d);
   ko.applyBindings(vm);
 });
 
-<!--Models-->
+// Models
+
+// Answer
 function AnswerViewModel(answer) {
   var self = this;
   self.text = answer.text;
-  self.selected = ko.observable(false);
   self.id = answer.id;
+  self.selected = ko.observable(false);
   self.canBeHidden = "canBeHidden" in answer ? answer.canBeHidden : false;
-  self.aVisible = ko.observable(true);
+  self.aVisible = ko.observable(true); // Current state of visibility
   return self;
 };
-  
+
+// Ticket
 function TicketViewModel(ticket) {
   var self = this;
   self.question = ticket.question;
-  self.questionSigned = ko.observable(false);
-  self.applied50 = ko.observable(false);
   self.allow50 = ko.observable(ticket.allow50);
   self.answers = [];
   for (var i = 0; i < ticket.answers.length; i++) {
       self.answers.push(new AnswerViewModel(ticket.answers[i]));
   }
   
-  //TODO: fix logic
-  self.select = function(answer) {
-      self.answers.forEach(function(a) { a.selected(false); });
-      answer.selected(true);
-  }
+  self.questionSigned = ko.observable(false); // Current state of question sign
+  self.applied50 = ko.observable(false);  // Current state of tip
+
   return self;
 };
 
+// Quiz
 function QuizViewModel(data) {
     var self = this;
     
