@@ -58,10 +58,12 @@ function QuizViewModel(data) {
     self.currentTicketId = ko.observable(0);
     self.currentTicketIdNormalized = ko.computed(function(){return self.currentTicketId() + 1;});
     self.currentTicket = ko.computed(function(){return self.tickets()[self.currentTicketId()];});
-    
+    // Current state of question sign for current ticket
     self.questionSignVisible = ko.computed(function(){return self.currentTicket().questionSigned();});
+    // Current state of tip ability for current ticket
     self.button50Visible = ko.computed(function(){return self.currentTicket().allow50();});
-    self.sign50Visible = ko.computed(function(){return self.currentTicket().applied50();});;
+    // Current state of tip for current ticket
+    self.sign50Visible = ko.computed(function(){return self.currentTicket().applied50();});
     
     self.onQuestionSignButtonClick = function(){
       self.currentTicket().questionSigned(!self.questionSignVisible())
