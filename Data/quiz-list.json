@@ -1,0 +1,14 @@
+{
+  "quiz" : [
+    {
+      "title" : "Екзамен 1",
+      "id" : 1,
+      "fileName" : "Exam1.json"
+    },
+    {
+      "title" : "Екзамен 2",
+      "id" : 2,
+      "fileName" : "Exam2.json"
+    }
+  ]
+}

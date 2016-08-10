@@ -3,8 +3,13 @@ var TICKETS_IN_ROW = 10;
 
 // Document Events
 $(document).ready(function(){
-  var vm = new QuizViewModel(d);
-  ko.applyBindings(vm);
+  //Load data, create model
+  var id = window.location.search.replace("?id=", ''); 
+  var requestUrl = settings.quizAPIurl + settings.apiQuizResource + '/' + id;
+  $.getJSON(requestUrl, function(data) {
+    var vm = new QuizViewModel(data);
+    ko.applyBindings(vm);
+  });
 });
 
 // Models
@@ -159,7 +164,7 @@ function QuizViewModel(data) {
       if (self.isTimerRunning()){
         clearInterval(self.timerId);
       }
-
+      // TODO: get quiz results and send them to server
       alert("That's all!");
     };
     
@@ -168,7 +173,7 @@ function QuizViewModel(data) {
     self.Init = function(){
       var $templates = $("#templates").children();
       var $parent = $(".row.pages").children().first();
-      var $clonedNode;
+      var $clonedNode, $span;
       
       for (var i = 0; i < self.tickets().length; i++) {
         if (i % TICKETS_IN_ROW === 0 && i > 0){
