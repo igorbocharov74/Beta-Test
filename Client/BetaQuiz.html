@@ -58,9 +58,9 @@
             <p class="question" data-bind="text : question"></p>
             <p class="answer" data-bind="foreach: answers">
                 <label data-bind="visible: aVisible">
-                  <input type="radio" name="answersGroup" 
-                         data-bind="attr: {value: id}, checked: $root.selected" />
-                  <span data-bind="text: text"></span>
+                  <input type="radio" name="answersGroup"
+                         data-bind="attr: {value: $data.id}, checked: $data.selected" />
+                  <span data-bind="text : text"></span>
                 </label>
             </p>
           </div>

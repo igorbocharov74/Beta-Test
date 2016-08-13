@@ -1,6 +1,9 @@
 // Constants
 var TICKETS_IN_ROW = 10;
 
+// Data
+var storage = {};
+
 // Document Events
 $(document).ready(function(){
   //Load data, create model
@@ -18,7 +21,7 @@ $(document).ready(function(){
 function AnswerViewModel(answer) {
   var self = this;
   self.text = answer.text;
-  self.id = answer.id;
+  self.id = answer.value;
   self.selected = ko.observable(false);
   self.canBeHidden = "canBeHidden" in answer ? answer.canBeHidden : false;
   self.aVisible = ko.observable(true); // Current state of visibility
@@ -28,6 +31,7 @@ function AnswerViewModel(answer) {
 // Ticket
 function TicketViewModel(ticket) {
   var self = this;
+  self.id = ticket.id;
   self.question = ticket.question;
   self.allow50 = ko.observable(ticket.allow50);
   self.answers = [];
@@ -161,11 +165,50 @@ function QuizViewModel(data) {
     };
     
     self.EndQuiz = function(){
+      var ticketIndex, answerIndex;
+            
       if (self.isTimerRunning()){
         clearInterval(self.timerId);
       }
       // TODO: get quiz results and send them to server
-      alert("That's all!");
+      var results = {};
+      results.name = storage.Name;
+      results.settings = self.settings;
+      results.tickets = [];
+      
+      // Process results
+      for (ticketIndex = 0; ticketIndex < self.tickets().length; ticketIndex++) {
+        var ticketAnswers = self.tickets()[ticketIndex].answers;
+        var revisedAnswers = [];
+        var ticketId = self.tickets()[ticketIndex].id;
+        // Correct answer item
+        var correctAnswer = self.correctAnswers.filter(function (entry) { return entry.id === ticketId; })[0];
+        
+        for (answerIndex = 0; answerIndex < ticketAnswers.length; answerIndex++) {        
+          if (ticketAnswers[answerIndex].selected()){
+            var currentIndexCorrect = correctAnswer.correct.filter(function (entry) { return entry === answerIndex + 1; }).length > 0;
+            revisedAnswers.push({id : answerIndex + 1, correct : currentIndexCorrect})
+          }
+        }
+        
+        var ticketResult = {
+          id : self.tickets()[ticketIndex].id,
+          answers : revisedAnswers
+        };
+        results.tickets.push(ticketResult);
+      }
+
+      // TODO: calculate percentage of the the correct answers
+      
+      // Send results to Server
+      var postUrl = settings.quizAPIurl + settings.apiResultResource;
+       $.ajax({
+         url: postUrl,
+         type: 'POST',
+         contentType:'application/json',
+         data: JSON.stringify(results),
+         dataType:'json'
+       });
     };
     
     // Init
@@ -189,6 +232,8 @@ function QuizViewModel(data) {
       }
        //Start timer
        self.StartTimer();
+       
+       storage.Name = 'bocharov';
     }
 
     self.Init();

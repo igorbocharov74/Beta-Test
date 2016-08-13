@@ -1,0 +1,78 @@
+{
+    "name": "bocharov",
+    "settings": {
+        "id": 1,
+        "title": "Test exam 1",
+        "timeLimit": {
+            "min": 10,
+            "sec": 0
+        },
+        "mixQuestions": true
+    },
+    "tickets": [
+        {
+            "id": 1,
+            "answers": [
+                {
+                    "id": 1,
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "answers": [
+                {
+                    "id": 3,
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "answers": [
+                {
+                    "id": 5,
+                    "correct": true
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "answers": [
+                {
+                    "id": 4,
+                    "correct": false
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "answers": []
+        },
+        {
+            "id": 6,
+            "answers": []
+        },
+        {
+            "id": 7,
+            "answers": []
+        },
+        {
+            "id": 8,
+            "answers": []
+        },
+        {
+            "id": 9,
+            "answers": []
+        },
+        {
+            "id": 10,
+            "answers": []
+        },
+        {
+            "id": 11,
+            "answers": []
+        }
+    ]
+}
