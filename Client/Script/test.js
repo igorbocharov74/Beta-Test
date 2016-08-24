@@ -170,7 +170,7 @@ function QuizViewModel(data) {
       if (self.isTimerRunning()){
         clearInterval(self.timerId);
       }
-      // TODO: get quiz results and send them to server
+
       var results = {};
       results.name = storage.Name;
       results.settings = self.settings;

@@ -23,28 +23,18 @@
             "id": 2,
             "answers": [
                 {
-                    "id": 3,
-                    "correct": true
+                    "id": 4,
+                    "correct": false
                 }
             ]
         },
         {
             "id": 3,
-            "answers": [
-                {
-                    "id": 5,
-                    "correct": true
-                }
-            ]
+            "answers": []
         },
         {
             "id": 4,
-            "answers": [
-                {
-                    "id": 4,
-                    "correct": false
-                }
-            ]
+            "answers": []
         },
         {
             "id": 5,
