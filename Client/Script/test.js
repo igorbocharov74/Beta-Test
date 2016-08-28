@@ -178,14 +178,18 @@ function QuizViewModel(data) {
       
       // Process results
       for (ticketIndex = 0; ticketIndex < self.tickets().length; ticketIndex++) {
+        // Answer cases
         var ticketAnswers = self.tickets()[ticketIndex].answers;
-        var revisedAnswers = [];
+        // Current ticket ID
         var ticketId = self.tickets()[ticketIndex].id;
-        // Correct answer item
+        // Correct answer item for current ticket ID
         var correctAnswer = self.correctAnswers.filter(function (entry) { return entry.id === ticketId; })[0];
-        
+
+        var revisedAnswers = [];
         for (answerIndex = 0; answerIndex < ticketAnswers.length; answerIndex++) {        
           if (ticketAnswers[answerIndex].selected()){
+            // Check if current answer is present in correct answers
+            // TODO: replace answerIndex with answer.value
             var currentIndexCorrect = correctAnswer.correct.filter(function (entry) { return entry === answerIndex + 1; }).length > 0;
             revisedAnswers.push({id : answerIndex + 1, correct : currentIndexCorrect})
           }
@@ -214,6 +218,7 @@ function QuizViewModel(data) {
     // Init
     
     self.Init = function(){
+      // Create tickets markup
       var $templates = $("#templates").children();
       var $parent = $(".row.pages").children().first();
       var $clonedNode, $span;
@@ -233,6 +238,7 @@ function QuizViewModel(data) {
        //Start timer
        self.StartTimer();
        
+       //TODO: implement input pupil's name and form before start quiz
        storage.Name = 'bocharov';
     }
 
