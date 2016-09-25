@@ -12,21 +12,11 @@
     "tickets": [
         {
             "id": 1,
-            "answers": [
-                {
-                    "id": 1,
-                    "correct": true
-                }
-            ]
+            "answers": []
         },
         {
             "id": 2,
-            "answers": [
-                {
-                    "id": 4,
-                    "correct": false
-                }
-            ]
+            "answers": []
         },
         {
             "id": 3,

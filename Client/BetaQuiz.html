@@ -79,7 +79,9 @@
         
           <!--Ticket thumbnails -->
           <div class="row pages">
-            <div class="col-xs-12"></div>
+            <div class="col-xs-12" data-bind="template : {name: 'button-template', foreach : tickets}">
+            
+            </div>
           </div>
           
         </div>
@@ -94,9 +96,12 @@
     </div><!--container-->
     
     <!--Templates-->
-    <div id="templates" class="hidden">
-      <button type="button" class="btn btn-default btn-lg ticket-thumbnail"><span></span></button>
-      <div class="clearfix"></div>
-    <div>
+    <script type="text/html" id="button-template">
+      <div data-bind="visible : $root.newRow($index)" class="clearfix"></div>
+      <button type="button" class="btn btn-default btn-lg ticket-thumbnail" data-bind="click: function(){$root.onTicketThumbClick($index());}">
+        <span data-bind="css: { marked: $data.questionSigned()}, text : $index() + 1">
+        </span>
+      </button>
+    </script>
   </body>
 </html>

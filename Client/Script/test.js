@@ -58,6 +58,8 @@ function QuizViewModel(data) {
     //Settings
     self.settings = data.quiz.settings;
     
+    self.tickets_in_row = TICKETS_IN_ROW;
+    
     // Questions
     self.correctAnswers = data.quiz.correctAnswers;
     
@@ -124,6 +126,10 @@ function QuizViewModel(data) {
     
     self.onEndQuizButtonClick = function(){
       self.EndQuiz();
+    };
+    
+    self.newRow = function(index){
+     return index % self.tickets_in_row === 0 && index > 0
     };
     
     // Timer
@@ -218,23 +224,6 @@ function QuizViewModel(data) {
     // Init
     
     self.Init = function(){
-      // Create tickets markup
-      var $templates = $("#templates").children();
-      var $parent = $(".row.pages").children().first();
-      var $clonedNode, $span;
-      
-      for (var i = 0; i < self.tickets().length; i++) {
-        if (i % TICKETS_IN_ROW === 0 && i > 0){
-          $clonedNode = $($templates[1]).clone();
-          $clonedNode.appendTo($parent);
-        }
-        $clonedNode = $($templates[0]).clone();
-        $($clonedNode).attr("data-bind", "click: function(){onTicketThumbClick(" + i + ");}");
-        $span = $($clonedNode).find("span");
-        $span.attr("data-bind", "css: { marked: tickets()[" + i + "].questionSigned()}")
-        $span.text(i+1);
-        $clonedNode.appendTo($parent);
-      }
        //Start timer
        self.StartTimer();
        
